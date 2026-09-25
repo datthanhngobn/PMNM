@@ -1,0 +1,8 @@
+id,product_category,brand,product_age,country,event_date,problem,repair_status,repair_barrier_if_end_of_life
+1,aircon,LG,abd,VN,2024-01-05,không lạnh,Fixed,
+2,fan,Panasonic,5,VN,2024-02-10,quạt kêu to,Fixed,
+3,dehumidifier,Sharp,,VN,2024-03-01,không hút ẩm,End of life,Spare parts
+4,laptop,Dell,2,VN,2024-03-05,không lên màn,Fixed,
+5,fan,,7,TH,2024-04-01,cánh quạt vỡ,Repairable,
+6,washing machine,Toshiba,8,VN,2024-04-10,rò nước,End of life,Repair information
+7,dehumidifier,Sharp,,VN,2024-03-01,không hút ẩm,End of life,Spare parts

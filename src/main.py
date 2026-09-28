@@ -4,9 +4,9 @@
 
 from pathlib import Path
 
-from .loader import SOURCE_URL, nap_vao_db, tai_file, tinh_checksum
-from .models import make_session
-from .repository import HistoricalRepairRepository
+from loader import SOURCE_URL, nap_vao_db, tai_file, tinh_checksum
+from models import make_session
+from repository import HistoricalRepairRepository
 
 if __name__ == "__main__":
     session = make_session()

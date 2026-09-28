@@ -9,7 +9,7 @@ from pathlib import Path
 
 import httpx
 
-from .models import HistoricalRepairCase
+from models import HistoricalRepairCase
 
 SOURCE_URL = "<https://raw.githubusercontent.com/openrepair/data/refs/heads/master/aggregated/202507/OpenRepairData_v0.3_aggregate_202507.csv>"
 LICENSE = "CC-BY-SA-4.0"
@@ -18,7 +18,7 @@ TRANSFORM = "ords-map-v1"
 
 # Tạo database bằng sqlite
 database = sqlite3.connect("historical_repair_case.db")
-database.execute("""CREATE TABLE history_repair_case(
+database.execute("""CREATE TABLE IF NOT EXISTS history_repair_case(
 external_reference TEXT,
 asset_category TEXT,
 asset_brand TEXT,
@@ -45,13 +45,13 @@ mapping = {
 csv_key = list(mapping.keys())
 db_attribute = list(mapping.values())
 
-db_attribute = ", ".join(csv_key)
-str_values = ""
+db_attribute = ", ".join(db_attribute)
+str_values = "?"
 
-for i in range(len(csv_key)) :
-    str_values += "?, "
+for i in range(len(csv_key) - 1) :
+    str_values += ", ?"
 
-query_insert_values = f"INSERT INTO database ({db_attribute} VALUES({str_values}))"
+query_insert_values = f"INSERT INTO history_repair_case ({db_attribute}) VALUES({str_values})"
 
 
 
@@ -80,6 +80,13 @@ def tinh_checksum(path: Path) -> str:
             h.update(chunk)
     return h.hexdigest()
 
+def convert_str_to_float(value : str) -> float:
+    try : 
+        res = float(value)
+    except ValueError:
+        res = None
+
+    return res
 
 def nap_vao_db(session, path: Path, checksum: str) -> int:
     """Đọc CSV, lọc, tạo object, lưu vào database. Trả về số bản ghi đã nạp."""
@@ -90,9 +97,10 @@ def nap_vao_db(session, path: Path, checksum: str) -> int:
         data_add = []
         for row in reader:
             if row["product_category"].lower() in TU_KHOA_CAN_LAY :
-                values = tuple(row[key] for key in csv_key)
-                data_add.append(values)
                 so_ban_ghi += 1
+                row["product_age"] = convert_str_to_float(row["product_age"])
+                data = tuple(row[key] for key in csv_key)
+                data_add.append(data)
 
     database.executemany(query_insert_values, data_add)
     session.commit()

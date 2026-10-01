@@ -28,14 +28,19 @@ class HistoricalRepairRepository(Repository):
         return self.session.get(HistoricalRepairCase, record_id)
 
     def count(self) -> int:
-        return self.session.scalar(
-            select(func.count()).select_from(HistoricalRepairCase)
-        ) or 0
+        return (
+            self.session.scalar(select(func.count()).select_from(HistoricalRepairCase))
+            or 0
+        )
 
-    def search_by_note(self, keyword: str, limit: int = 20) -> list[HistoricalRepairCase]:
+    def search_by_note(
+        self, keyword: str, limit: int = 20
+    ) -> list[HistoricalRepairCase]:
         """Trả về các bản ghi có mô tả lỗi chứa từ khóa."""
         return self.session.scalar(
-            select(HistoricalRepairCase).where(HistoricalRepairCase.historical_case_note.icontains(keyword)).limit(limit)
+            select(HistoricalRepairCase)
+            .where(HistoricalRepairCase.historical_case_note.icontains(keyword))
+            .limit(limit)
         )
 
     def count_by_outcome(self) -> dict[str, int]:
@@ -44,7 +49,8 @@ class HistoricalRepairRepository(Repository):
         Kết quả mong đợi trông giống: {"Fixed": 2030, "End of life": 1261, ...}
         """
         rows = self.session.execute(
-            select(HistoricalRepairCase.historical_outcome, func.count())
-            .group_by(HistoricalRepairCase.historical_outcome)
+            select(HistoricalRepairCase.historical_outcome, func.count()).group_by(
+                HistoricalRepairCase.historical_outcome
+            )
         ).all()
         return {str(ket_qua): int(so_luong) for ket_qua, so_luong in rows}

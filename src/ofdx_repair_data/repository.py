@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from .models import HistoricalRepairCase
+from ofdx_repair_data.models import HistoricalRepairCase
 
 
 class Repository(ABC):

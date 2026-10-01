@@ -4,9 +4,9 @@
 
 from pathlib import Path
 
-from src.loader import nap_vao_db
-from src.models import make_session
-from src.repository import HistoricalRepairRepository
+from ofdx_repair_data.loader import nap_vao_db
+from ofdx_repair_data.models import make_session
+from ofdx_repair_data.repository import HistoricalRepairRepository
 
 
 def test_chi_nap_dung_loai_san_pham(tmp_path):

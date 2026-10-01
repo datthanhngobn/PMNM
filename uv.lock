@@ -126,6 +126,22 @@ dependencies = [
     { name = "sqlalchemy" },
     { name = "typing-extensions" },
 ]
+dependencies = [
+    { name = "anyio" },
+    { name = "certifi" },
+    { name = "greenlet" },
+    { name = "h11" },
+    { name = "httpcore" },
+    { name = "httpx" },
+    { name = "idna" },
+    { name = "iniconfig" },
+    { name = "packaging" },
+    { name = "pluggy" },
+    { name = "pygments" },
+    { name = "pytest" },
+    { name = "sqlalchemy" },
+    { name = "typing-extensions" },
+]
 
 [package.dev-dependencies]
 dev = [
@@ -133,6 +149,22 @@ dev = [
 ]
 
 [package.metadata]
+requires-dist = [
+    { name = "anyio", specifier = "==4.15.1" },
+    { name = "certifi", specifier = "==2026.7.22" },
+    { name = "greenlet", specifier = "==3.5.6" },
+    { name = "h11", specifier = "==0.16.0" },
+    { name = "httpcore", specifier = "==1.0.9" },
+    { name = "httpx", specifier = "==0.28.1" },
+    { name = "idna", specifier = "==3.20" },
+    { name = "iniconfig", specifier = "==2.3.0" },
+    { name = "packaging", specifier = "==26.3" },
+    { name = "pluggy", specifier = "==1.6.0" },
+    { name = "pygments", specifier = "==2.21.0" },
+    { name = "pytest", specifier = "==9.1.1" },
+    { name = "sqlalchemy", specifier = "==2.0.54" },
+    { name = "typing-extensions", specifier = "==4.16.0" },
+]
 requires-dist = [
     { name = "anyio", specifier = "==4.15.1" },
     { name = "certifi", specifier = "==2026.7.22" },

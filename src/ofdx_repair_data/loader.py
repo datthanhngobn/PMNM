@@ -45,8 +45,8 @@ mapping = {
 csv_key = list(mapping.keys())
 db_attribute = list(mapping.values())
 
-db_attribute = ", ".join(csv_key)
-str_values = ""
+db_attribute = ", ".join(db_attribute)
+str_values = "?"
 
 for i in range(len(csv_key)):
     str_values += "?, "
@@ -80,6 +80,15 @@ def tinh_checksum(path: Path) -> str:
     return h.hexdigest()
 
 
+def convert_str_to_float(value: str) -> float:
+    try:
+        res = float(value)
+    except ValueError:
+        res = None
+
+    return res
+
+
 def nap_vao_db(session, path: Path, checksum: str) -> int:
     """Đọc CSV, lọc, tạo object, lưu vào database. Trả về số bản ghi đã nạp."""
 
@@ -92,6 +101,9 @@ def nap_vao_db(session, path: Path, checksum: str) -> int:
                 values = tuple(row[key] for key in csv_key)
                 data_add.append(values)
                 so_ban_ghi += 1
+                row["product_age"] = convert_str_to_float(row["product_age"])
+                data = tuple(row[key] for key in csv_key)
+                data_add.append(data)
 
     database.executemany(query_insert_values, data_add)
     session.commit()

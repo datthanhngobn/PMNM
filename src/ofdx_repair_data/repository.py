@@ -35,7 +35,7 @@ class HistoricalRepairRepository(Repository):
     def search_by_note(self, keyword: str, limit: int = 20) -> list[HistoricalRepairCase]:
         """Trả về các bản ghi có mô tả lỗi chứa từ khóa."""
         return self.session.scalar(
-            select(HistoricalRepairCase).where(HistoricalRepairCase.c.historical_case_note.icontains(keyword)).limit(limit)
+            select(HistoricalRepairCase).where(HistoricalRepairCase.historical_case_note.icontains(keyword)).limit(limit)
         )
 
     def count_by_outcome(self) -> dict[str, int]:
